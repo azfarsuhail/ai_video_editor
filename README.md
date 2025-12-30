@@ -178,6 +178,5 @@ Although the system is primarily driven by the UI, the backend exposes endpoints
 | **Scripts won't run** | Permission denied | Run `chmod +x *.sh` to make them executable. |
 | **"Module not found"** | Venv not active | Ensure you ran `source .venv/bin/activate` before starting. |
 
-```
 
 
