@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Media Studio - Tapmad</title>
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg: #050505;
+            --surface: #0f0f0f;
+            --surface-hover: #161616;
+            --border: #222;
+            --primary: #22c55e; 
+            --primary-glow: rgba(34, 197, 94, 0.15);
+            --danger: #ef4444;
+            --text: #e5e5e5;
+            --text-muted: #888;
+            --radius: 12px;
+        }
+
+        * { box-sizing: border-box; outline: none; }
+        body { background-color: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; margin: 0; padding-top: 70px; padding-bottom: 100px; }
+
+        /* HEADER */
+        .header {
+            position: fixed; top: 0; left: 0; right: 0; height: 70px;
+            background: rgba(5, 5, 5, 0.85); backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border); display: flex;
+            align-items: center; justify-content: space-between; padding: 0 2rem; z-index: 100;
+        }
+        .brand { font-weight: 700; font-size: 1.1rem; display: flex; align-items: center; gap: 10px; color: white; }
+        .brand i { color: var(--primary); font-size: 1.4rem; }
+        
+        .controls { display: flex; align-items: center; gap: 15px; }
+
+        .select-wrapper { position: relative; }
+        select { 
+            background: var(--surface); color: var(--text); border: 1px solid var(--border); 
+            padding: 10px 16px; border-radius: 8px; font-size: 0.9rem; cursor: pointer; min-width: 240px; 
+            appearance: none; -webkit-appearance: none;
+        }
+        select:hover { border-color: #444; }
+        select:focus { border-color: var(--primary); }
+
+        .btn-nav {
+            text-decoration: none; color: var(--text-muted); font-size: 0.9rem; 
+            display: flex; align-items: center; gap: 6px; padding: 8px 12px; 
+            border-radius: 6px; transition: 0.2s; border: 1px solid transparent;
+        }
+        .btn-nav:hover { background: var(--surface); color: #fff; border-color: var(--border); }
+        .btn-nav.active { background: var(--primary-glow); color: var(--primary); border-color: rgba(34, 197, 94, 0.2); }
+
+        /* LAYOUT */
+        .container { max-width: 1600px; margin: 0 auto; padding: 30px; min-height: 80vh; }
+        
+        .toolbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        
+        .toggle-group { display: flex; gap: 20px; align-items: center; }
+        .filter-toggle { display: flex; align-items: center; gap: 8px; font-size: 0.85rem; color: var(--text-muted); cursor: pointer; user-select: none; }
+        .filter-toggle:hover { color: #fff; }
+        .filter-toggle input { accent-color: var(--primary); width: 16px; height: 16px; }
+
+        /* SECTIONS */
+        .section-header { 
+            display: flex; justify-content: space-between; align-items: center; 
+            margin-bottom: 20px; padding-bottom: 10px; border-bottom: 1px solid var(--border); 
+        }
+        .section-title { font-size: 1rem; font-weight: 600; display: flex; align-items: center; gap: 10px; text-transform: uppercase; color: #fff; }
+        .count-badge { background: #222; color: #888; padding: 2px 8px; border-radius: 4px; font-size: 0.75rem; }
+
+        /* GRID SYSTEM */
+        .grid { display: grid; gap: 24px; }
+        .grid.horizontal { grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); }
+        .grid.vertical { grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); }
+
+        /* CARD DESIGN */
+        .card { 
+            background: var(--surface); border: 1px solid var(--border); 
+            border-radius: var(--radius); overflow: hidden; position: relative;
+            transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+            display: flex; flex-direction: column;
+        }
+        
+        /* Interactive States */
+        .card.selected { border-color: var(--primary); box-shadow: 0 0 0 2px var(--primary); transform: translateY(-2px); }
+        .card.processing { border-color: #fbbf24; box-shadow: 0 0 15px rgba(251, 191, 36, 0.1); }
+        .card.ready { border-color: var(--primary); }
+        .card.error { border-color: var(--danger); }
+
+        /* Selection Overlay */
+        .select-overlay {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.4); z-index: 10;
+            display: flex; justify-content: center; align-items: center;
+            opacity: 0; transition: opacity 0.2s; cursor: pointer;
+        }
+        .card.selected .select-overlay { opacity: 1; background: rgba(34, 197, 94, 0.1); }
+        .card:hover .select-overlay { opacity: 1; }
+        .chk-big { 
+            width: 24px; height: 24px; accent-color: var(--primary); 
+            transform: scale(1.5); cursor: pointer;
+        }
+
+        .video-container { background: #000; position: relative; width: 100%; }
+        .horizontal .video-container { aspect-ratio: 16/9; }
+        .vertical .video-container { aspect-ratio: 9/16; }
+        video { width: 100%; height: 100%; object-fit: contain; }
+
+        .card-content { padding: 15px; flex: 1; display: flex; flex-direction: column; gap: 12px; }
+        .filename { font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; color: #ccc; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+        /* Controls */
+        .controls-row { display: grid; grid-template-columns: 1fr auto auto; gap: 8px; align-items: center; }
+        .mini-select { width: 100%; background: #000; color: #ccc; border: 1px solid #333; border-radius: 6px; padding: 6px; font-size: 0.8rem; }
+        .chk-group { display: flex; gap: 8px; }
+        .chk-btn { font-size: 0.75rem; color: #666; border: 1px solid #333; padding: 4px 8px; border-radius: 4px; cursor: pointer; user-select: none; transition: 0.2s; }
+        .chk-btn.active { background: var(--primary-glow); color: var(--primary); border-color: rgba(34, 197, 94, 0.3); }
+        .chk-btn input { display: none; }
+
+        /* Buttons */
+        .btn { width: 100%; padding: 10px; border: none; border-radius: 6px; font-weight: 600; font-size: 0.85rem; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; transition: 0.2s; text-decoration: none; }
+        .btn-primary { background: var(--primary); color: #000; }
+        .btn-primary:hover { filter: brightness(1.1); }
+        .btn-download { background: #1a1a1a; color: var(--primary); border: 1px solid var(--primary); }
+        .btn-download:hover { background: var(--primary); color: #000; }
+        .btn-refresh { width: 36px; padding: 0; background: #111; color: #666; border: 1px solid #333; }
+        .btn-refresh:hover { color: #fff; border-color: #666; }
+
+        /* BATCH BAR */
+        .batch-bar {
+            position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(150px);
+            background: #111; border: 1px solid #333; padding: 12px 20px; border-radius: 100px;
+            display: flex; align-items: center; gap: 15px; box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+            z-index: 1000; transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .batch-bar.active { transform: translateX(-50%) translateY(0); }
+        .batch-count { font-weight: 700; color: #fff; background: #333; padding: 6px 14px; border-radius: 20px; font-size: 0.9rem; }
+
+        /* Pagination */
+        .pagination { display: flex; gap: 5px; }
+        .pg-btn { background: #111; color: #888; border: 1px solid #333; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; border-radius: 4px; cursor: pointer; }
+        .pg-btn.active { background: var(--primary); color: #000; border-color: var(--primary); }
+        .pg-btn:disabled { opacity: 0.3; cursor: default; }
+
+        .state-processing { padding: 10px; border-radius: 6px; font-size: 0.8rem; text-align: center; background: rgba(251, 191, 36, 0.1); color: #fbbf24; border: 1px solid rgba(251, 191, 36, 0.2); }
+        .state-error { padding: 10px; border-radius: 6px; font-size: 0.8rem; text-align: center; background: rgba(239, 68, 68, 0.1); color: var(--danger); border: 1px solid rgba(239, 68, 68, 0.2); }
+        .spin { animation: spin 1s linear infinite; }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+
+        .loader-overlay { position: fixed; inset: 0; background: var(--bg); z-index: 500; display: flex; align-items: center; justify-content: center; transition: opacity 0.3s; pointer-events: none; opacity: 0; }
+        .loader-overlay.active { opacity: 1; pointer-events: all; }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <div class="brand"><i class="ri-movie-2-fill"></i> Tapmad Studio</div>
+
+        <div class="controls">
+            <a href="/manager" class="btn-nav"><i class="ri-dashboard-3-line"></i> Live Streams</a>
+            <div class="select-wrapper">
+                <select id="matchSelector">
+                    <option value="">Select Match Folder...</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div class="loader-overlay" id="loader">
+        <div style="text-align:center; color:var(--primary)">
+            <i class="ri-loader-4-line spin" style="font-size:2rem"></i>
+            <div style="margin-top:10px; font-size:0.9rem">Loading Assets...</div>
+        </div>
+    </div>
+
+    <div class="container">
+        
+        <div class="toolbar">
+            <h2 id="pageTitle" style="font-size:1.5rem; margin:0">Dashboard</h2>
+            <div class="toggle-group">
+                <label class="filter-toggle" style="color:var(--text)">
+                    <input type="checkbox" id="selectMode" onchange="toggleSelectMode()"> 
+                    <i class="ri-checkbox-multiple-line"></i> Batch Mode
+                </label>
+                <div style="width:1px; height:20px; background:#333"></div>
+                <label class="filter-toggle">
+                    <input type="checkbox" id="hideCompleted" onchange="toggleCompleted()"> Hide Completed
+                </label>
+            </div>
+        </div>
+
+        <div id="content">
+            <div style="text-align:center; padding:100px; color:#333">
+                <i class="ri-folder-open-line" style="font-size:3rem; margin-bottom:1rem; display:block"></i>
+                Please select a match to begin branding.
+            </div>
+        </div>
+    </div>
+
+    <div class="batch-bar" id="batchBar">
+        <div class="batch-count" id="batchCount">0 Selected</div>
+        
+        <div style="border-left:1px solid #333; padding-left:15px; display:flex; gap:10px; align-items:center;">
+            <select id="batchLogoSelect" style="background:#222; border:1px solid #444; color:#fff; padding:6px; border-radius:6px; font-size:0.85rem; max-width: 150px;">
+                <option value="">(Keep Individual)</option>
+            </select>
+        </div>
+
+        <button class="btn btn-primary" style="width:auto; padding:8px 20px" onclick="processBatch()">
+            <i class="ri-flashlight-fill"></i> Brand Selected
+        </button>
+        <button class="btn" style="width:auto; background:#222; color:#ccc; padding:8px 15px" onclick="clearSelection()">
+            Cancel
+        </button>
+    </div>
+
+    <script>
+        let LOGOS = [], HAS_INTRO = false, HAS_OUTRO = false, CURRENT_MATCH = "";
+        let MATCH_DATA = {}, PAGE_STATE = {}, USER_STATE = {};
+        const ITEMS_PER_PAGE = 12;
+        let PROCESSING_SET = new Set();
+        let LIVE_INTERVAL = null;
+        let HIDE_COMPLETED = false;
+        
+        // Batch State
+        let SELECT_MODE = false;
+        let SELECTED_FILES = new Set();
+        let LAST_SELECTED_TYPE_VERTICAL = false; 
+
+        async function init() {
+            try {
+                const config = await fetch('/api/config').then(r => r.json());
+                LOGOS = config.logos; 
+                HAS_INTRO = config.has_intro; 
+                HAS_OUTRO = config.has_outro;
+
+                const matches = await fetch('/api/matches').then(r => r.json());
+                const sel = document.getElementById('matchSelector');
+                matches.forEach(m => sel.appendChild(new Option(m, m)));
+                sel.onchange = (e) => loadMatch(e.target.value);
+
+                const savedMatch = localStorage.getItem('tapmad_last_match');
+                if (savedMatch && matches.includes(savedMatch)) {
+                    sel.value = savedMatch;
+                    loadMatch(savedMatch);
+                }
+            } catch (e) { console.error("Init Error:", e); }
+        }
+
+        // --- SMART LOGO FILTERING ---
+        function getLogosForType(isVertical) {
+            return LOGOS.filter(filename => {
+                const nameWithoutExt = filename.split('.')[0];
+                const hasV = nameWithoutExt.endsWith('V') || nameWithoutExt.endsWith('_vertical');
+                if (isVertical) return hasV; 
+                return !hasV;
+            });
+        }
+
+        async function loadMatch(matchName) {
+            if(!matchName) return;
+            localStorage.setItem('tapmad_last_match', matchName);
+            document.getElementById('pageTitle').innerText = matchName.replace(/_/g, ' ');
+            
+            toggleLoader(true);
+            CURRENT_MATCH = matchName;
+            USER_STATE = {}; 
+            
+            // Clear batch mode on new match
+            SELECT_MODE = false;
+            document.getElementById('selectMode').checked = false;
+            SELECTED_FILES.clear();
+            updateBatchBar();
+
+            if (LIVE_INTERVAL) clearInterval(LIVE_INTERVAL);
+            await refreshData();
+            toggleLoader(false);
+            
+            LIVE_INTERVAL = setInterval(refreshDataSilent, 3000);
+        }
+
+        function toggleLoader(show) { document.getElementById('loader').classList.toggle('active', show); }
+
+        function toggleCompleted() {
+            HIDE_COMPLETED = document.getElementById('hideCompleted').checked;
+            renderAllSections();
+        }
+
+        function toggleSelectMode() {
+            SELECT_MODE = document.getElementById('selectMode').checked;
+            SELECTED_FILES.clear();
+            updateBatchBar();
+            renderAllSections();
+        }
+
+        async function refreshData() {
+            try {
+                MATCH_DATA = await fetch(`/api/videos/${CURRENT_MATCH}`).then(r => r.json());
+                cleanProcessingSet();
+                renderAllSections();
+            } catch(e) {}
+        }
+
+        async function refreshDataSilent() {
+            if(!CURRENT_MATCH) return;
+            try {
+                const newData = await fetch(`/api/videos/${CURRENT_MATCH}`).then(r => r.json());
+                MATCH_DATA = newData;
+                cleanProcessingSet();
+                renderAllSections();
+            } catch(e) {}
+        }
+
+        function cleanProcessingSet() {
+            for (const sub in MATCH_DATA) MATCH_DATA[sub].forEach(vid => { 
+                if(vid.ready || vid.error) PROCESSING_SET.delete(vid.filename); 
+            });
+        }
+
+        function renderAllSections() {
+            const content = document.getElementById('content');
+            if (Object.keys(MATCH_DATA).length === 0) {
+                content.innerHTML = `<div style="text-align:center; padding:50px; color:#444">No clips found.</div>`;
+                return;
+            }
+            for (const sub in MATCH_DATA) {
+                if(!document.getElementById(`section-${sub}`)) {
+                    const div = document.createElement('div');
+                    div.id = `section-${sub}`; div.style.marginBottom = "40px";
+                    content.appendChild(div);
+                }
+                renderSection(sub);
+            }
+        }
+
+        function renderSection(subfolder) {
+            const container = document.getElementById(`section-${subfolder}`);
+            let allVideos = MATCH_DATA[subfolder];
+            if(HIDE_COMPLETED) allVideos = allVideos.filter(v => !v.ready);
+
+            if (!(subfolder in PAGE_STATE)) PAGE_STATE[subfolder] = 0;
+            const totalPages = Math.ceil(allVideos.length / ITEMS_PER_PAGE);
+            let currentPage = PAGE_STATE[subfolder];
+            if (currentPage >= totalPages) currentPage = Math.max(0, totalPages - 1);
+            
+            const start = currentPage * ITEMS_PER_PAGE;
+            const pageVideos = allVideos.slice(start, start + ITEMS_PER_PAGE);
+
+            const isVertical = subfolder.toLowerCase().includes('reel');
+            const icon = isVertical ? 'ri-smartphone-line' : 'ri-macbook-line';
+
+            let navHtml = '';
+            if (totalPages > 1) {
+                navHtml = `<div class="pagination">
+                    <button class="pg-btn" onclick="changePage('${subfolder}', -1)" ${currentPage===0?'disabled':''}><i class="ri-arrow-left-s-line"></i></button>
+                    <span style="font-size:0.8rem; color:#666; display:flex; align-items:center; padding:0 5px">${currentPage+1}/${totalPages}</span>
+                    <button class="pg-btn" onclick="changePage('${subfolder}', 1)" ${currentPage>=totalPages-1?'disabled':''}><i class="ri-arrow-right-s-line"></i></button>
+                </div>`;
+            }
+
+            const headerHtml = `
+                <div class="section-header">
+                    <div class="section-title"><i class="${icon}"></i> ${subfolder} <span class="count-badge">${allVideos.length}</span></div>
+                    ${navHtml}
+                </div>`;
+            
+            const gridClass = isVertical ? 'vertical' : 'horizontal';
+            let gridHtml = `<div class="grid ${gridClass}">`;
+            
+            if(pageVideos.length === 0) {
+                gridHtml += `<div style="color:#444; font-size:0.9rem; grid-column:1/-1">No videos available.</div>`;
+            } else {
+                pageVideos.forEach(vid => {
+                    gridHtml += createCardHtml(subfolder, vid, isVertical);
+                });
+            }
+            gridHtml += `</div>`;
+            container.innerHTML = headerHtml + gridHtml;
+        }
+
+        function createCardHtml(subfolder, vid, isVertical) {
+            const isProcessing = vid.queued || PROCESSING_SET.has(vid.filename);
+            const isSelected = SELECTED_FILES.has(vid.filename);
+            
+            let stateClass = '';
+            if(vid.error) stateClass = 'error';
+            else if(vid.ready) stateClass = 'ready';
+            else if(isProcessing) stateClass = 'processing';
+            if(isSelected) stateClass += ' selected';
+
+            let overlayHtml = '';
+            if(SELECT_MODE && !isProcessing) {
+                overlayHtml = `<div class="select-overlay" onclick="toggleSelection('${vid.filename}', ${isVertical})">
+                    ${isSelected ? '<i class="ri-checkbox-circle-fill" style="font-size:3rem; color:var(--primary)"></i>' : '<i class="ri-checkbox-blank-circle-line" style="font-size:3rem; color:rgba(255,255,255,0.5)"></i>'}
+                </div>`;
+            }
+
+            let innerContent = '';
+
+            if (vid.error) {
+                innerContent = `
+                    <div class="filename">${vid.filename}</div>
+                    <div class="state-error"><i class="ri-error-warning-fill"></i> ${vid.error}</div>
+                    <button class="btn btn-primary" style="background:var(--danger); color:white" onclick="dismissError('${vid.filename}')">Retry</button>
+                `;
+            } else if (vid.ready) {
+                innerContent = `
+                    <div class="filename" style="color:var(--primary)">${vid.filename}</div>
+                    <div style="display:flex; gap:10px">
+                        <a href="${vid.download_url}" class="btn btn-download" style="flex:1"><i class="ri-download-line"></i> Save</a>
+                        <button class="btn btn-refresh" onclick="deleteJob('${subfolder}', '${vid.filename}')"><i class="ri-refresh-line"></i></button>
+                    </div>
+                `;
+            } else if (isProcessing) {
+                innerContent = `
+                    <div class="filename">${vid.filename}</div>
+                    <div class="state-processing"><i class="ri-loader-4-line spin"></i> Rendering...</div>
+                `;
+            } else {
+                // --- SMART DROPDOWN LOGIC ---
+                const availableLogos = getLogosForType(isVertical);
+                const saved = USER_STATE[vid.filename] || {};
+                const defaultLogo = availableLogos.length > 0 ? availableLogos[0] : "";
+                const currentLogo = saved.logo || defaultLogo;
+                
+                const logoOpts = availableLogos.map(l => `<option value="${l}" ${l===currentLogo?'selected':''}>${l}</option>`).join('');
+
+                const introActive = (saved.useIntro !== undefined ? saved.useIntro : HAS_INTRO) ? 'active' : '';
+                const outroActive = (saved.useOutro !== undefined ? saved.useOutro : HAS_OUTRO) ? 'active' : '';
+
+                innerContent = `
+                    <div class="filename">${vid.filename}</div>
+                    <div class="controls-row">
+                        <select class="mini-select" id="logo-${vid.filename}" onchange="updateState('${vid.filename}', 'logo', this.value)">${logoOpts}</select>
+                        <div class="chk-group">
+                            ${HAS_INTRO ? `<label class="chk-btn ${introActive}" onclick="toggleChk(this, '${vid.filename}', 'useIntro')">IN<input type="checkbox" id="intro-${vid.filename}" ${introActive?'checked':''}></label>` : ''}
+                            ${HAS_OUTRO ? `<label class="chk-btn ${outroActive}" onclick="toggleChk(this, '${vid.filename}', 'useOutro')">OUT<input type="checkbox" id="outro-${vid.filename}" ${outroActive?'checked':''}></label>` : ''}
+                        </div>
+                    </div>
+                    <button class="btn btn-primary" onclick="queueJob('${subfolder}', '${vid.filename}')"><i class="ri-flashlight-fill"></i> Brand It</button>
+                `;
+            }
+
+            return `
+            <div class="card ${stateClass}" data-filename="${vid.filename}">
+                ${overlayHtml}
+                <div class="video-container"><video src="${vid.ready ? vid.download_url : vid.url}" controls preload="none"></video></div>
+                <div class="card-content">${innerContent}</div>
+            </div>`;
+        }
+
+        // --- BATCH LOGIC ---
+        function toggleSelection(filename, isVertical) {
+            if (SELECTED_FILES.has(filename)) SELECTED_FILES.delete(filename);
+            else {
+                SELECTED_FILES.add(filename);
+                LAST_SELECTED_TYPE_VERTICAL = isVertical; // Update hint
+            }
+            updateBatchBar();
+            
+            // Efficient UI Update
+            const card = document.querySelector(`.card[data-filename="${filename}"]`);
+            if(card) {
+                if(SELECTED_FILES.has(filename)) {
+                    card.classList.add('selected');
+                    card.querySelector('.select-overlay').innerHTML = '<i class="ri-checkbox-circle-fill" style="font-size:3rem; color:var(--primary)"></i>';
+                } else {
+                    card.classList.remove('selected');
+                    card.querySelector('.select-overlay').innerHTML = '<i class="ri-checkbox-blank-circle-line" style="font-size:3rem; color:rgba(255,255,255,0.5)"></i>';
+                }
+            }
+        }
+
+        function updateBatchBar() {
+            const bar = document.getElementById('batchBar');
+            const count = document.getElementById('batchCount');
+            count.innerText = `${SELECTED_FILES.size} Selected`;
+            
+            // --- SMART BATCH DROPDOWN ---
+            const batchSel = document.getElementById('batchLogoSelect');
+            const validLogos = getLogosForType(LAST_SELECTED_TYPE_VERTICAL);
+            
+            batchSel.innerHTML = '<option value="">(Keep Individual)</option>';
+            validLogos.forEach(l => batchSel.appendChild(new Option(l, l)));
+
+            if(SELECTED_FILES.size > 0) bar.classList.add('active');
+            else bar.classList.remove('active');
+        }
+
+        function clearSelection() {
+            SELECTED_FILES.clear();
+            updateBatchBar();
+            renderAllSections();
+        }
+
+        async function processBatch() {
+            if(!confirm(`Start processing ${SELECTED_FILES.size} clips?`)) return;
+            
+            const masterLogo = document.getElementById('batchLogoSelect').value;
+            const filesToProcess = Array.from(SELECTED_FILES);
+            
+            clearSelection();
+            document.getElementById('selectMode').checked = false;
+            SELECT_MODE = false;
+            renderAllSections();
+
+            for(const filename of filesToProcess) {
+                let subfolder = null;
+                for(const sub in MATCH_DATA) {
+                    if(MATCH_DATA[sub].find(v => v.filename === filename)) {
+                        subfolder = sub; break;
+                    }
+                }
+                if(subfolder) await queueJob(subfolder, filename, masterLogo); 
+            }
+        }
+
+        function toggleChk(el, filename, key) {
+            const input = el.querySelector('input');
+            input.checked = !input.checked;
+            el.classList.toggle('active', input.checked);
+            updateState(filename, key, input.checked);
+        }
+
+        function updateState(filename, key, value) {
+            if (!USER_STATE[filename]) USER_STATE[filename] = {};
+            USER_STATE[filename][key] = value;
+        }
+
+        function changePage(subfolder, dir) {
+            PAGE_STATE[subfolder] += dir;
+            renderSection(subfolder);
+        }
+
+        function getJobSettings(filename) {
+            const domLogo = document.getElementById(`logo-${filename}`);
+            if(domLogo) return {
+                logo: domLogo.value,
+                useIntro: document.getElementById(`intro-${filename}`).checked,
+                useOutro: document.getElementById(`outro-${filename}`).checked
+            };
+            const saved = USER_STATE[filename] || {};
+            const isVertical = filename.includes("_V.") || filename.includes(".mov");
+            const available = getLogosForType(isVertical);
+
+            return {
+                logo: saved.logo || (available.length > 0 ? available[0] : ""),
+                useIntro: saved.useIntro !== undefined ? saved.useIntro : HAS_INTRO,
+                useOutro: saved.useOutro !== undefined ? saved.useOutro : HAS_OUTRO
+            };
+        }
+
+        async function queueJob(subfolder, filename, batchLogo = null) {
+            const settings = getJobSettings(filename);
+            // If batchLogo is provided (from dropdown), it overrides the individual setting
+            const finalLogo = batchLogo ? batchLogo : settings.logo;
+            
+            PROCESSING_SET.add(filename);
+            renderSection(subfolder);
+            
+            await fetch('/api/queue', { 
+                method: 'POST', 
+                headers: {'Content-Type': 'application/json'}, 
+                body: JSON.stringify({ 
+                    match: CURRENT_MATCH, 
+                    subfolder, 
+                    filename, 
+                    logo: finalLogo, 
+                    use_intro: settings.useIntro, 
+                    use_outro: settings.useOutro 
+                }) 
+            });
+            refreshDataSilent();
+        }
+
+        async function dismissError(filename) {
+            await fetch('/api/dismiss_error', { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({ filename }) });
+            refreshDataSilent();
+        }
+
+        async function deleteJob(subfolder, filename) {
+            if(!confirm("Re-process this video?")) return;
+            PROCESSING_SET.delete(filename);
+            delete USER_STATE[filename];
+            
+            const vid = MATCH_DATA[subfolder].find(v => v.filename === filename);
+            if(vid) { vid.ready = false; vid.queued = false; vid.error = null; }
+            renderSection(subfolder);
+
+            await fetch('/api/delete_output', { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({ match: CURRENT_MATCH, filename }) });
+            refreshDataSilent();
+        }
+
+        init();
+    </script>
+</body>
+</html>
