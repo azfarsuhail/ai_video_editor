@@ -1,0 +1,32 @@
+# --- Python & Environment ---
+.venv/
+__pycache__/
+*.py[cod]
+*.so
+
+# --- Project Specific Directories (Dynamic Content) ---
+# 'matches' contains generated video outputs (large files)
+matches/
+
+# 'queue' acts as a message broker; we don't want to sync job states
+queue/
+
+# --- Media Files ---
+# Ignore large video files in the root or other folders to prevent repo bloat
+*.mp4
+*.avi
+*.mov
+*.mkv
+
+# NOTE: If 'assets' contains essential branding (intro/outro) that MUST be 
+# shared, remove 'assets/' from this list. If they are huge, use Git LFS.
+assets/
+
+# --- Logs & System ---
+*.log
+.DS_Store
+Thumbs.db
+
+# --- Editor Settings ---
+.vscode/
+.idea/

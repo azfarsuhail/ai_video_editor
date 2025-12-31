@@ -1,0 +1,6 @@
+fastapi
+uvicorn
+numpy
+opencv-python-headless
+easyocr
+# We will handle torch separately in the Dockerfile for better stability

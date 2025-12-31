@@ -1,0 +1,41 @@
+INFO:     Started server process [7]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://0.0.0.0:5003 (Press CTRL+C to quit)
+INFO:     172.18.0.1:54174 - "GET /api/videos/Test HTTP/1.1" 200 OK
+INFO:     172.18.0.1:54174 - "GET /api/videos/Test HTTP/1.1" 200 OK
+INFO:     172.18.0.1:54182 - "GET /api/videos/Test HTTP/1.1" 200 OK
+INFO:     172.18.0.1:54182 - "GET /api/videos/Test HTTP/1.1" 200 OK
+INFO:     172.18.0.1:58102 - "GET /api/videos/Test HTTP/1.1" 200 OK
+INFO:     172.18.0.1:58102 - "GET /api/videos/Test HTTP/1.1" 200 OK
+INFO:     172.18.0.1:58102 - "GET /api/videos/Test HTTP/1.1" 200 OK
+INFO:     172.18.0.1:58102 - "GET /api/videos/Test HTTP/1.1" 200 OK
+INFO:     172.18.0.1:58102 - "GET /api/videos/Test HTTP/1.1" 200 OK
+INFO:     172.18.0.1:58102 - "GET /api/videos/Test HTTP/1.1" 200 OK
+INFO:     172.18.0.1:58102 - "GET /api/videos/Test HTTP/1.1" 200 OK
+INFO:     172.18.0.1:58102 - "GET /api/videos/Test HTTP/1.1" 200 OK
+INFO:     172.18.0.1:58102 - "GET /api/videos/Test HTTP/1.1" 200 OK
+INFO:     172.18.0.1:58102 - "GET /api/videos/Test HTTP/1.1" 200 OK
+INFO:     172.18.0.1:58102 - "GET /api/videos/Test HTTP/1.1" 200 OK
+INFO:     172.18.0.1:58102 - "GET /api/videos/Test HTTP/1.1" 200 OK
+INFO:     172.18.0.1:58102 - "GET /api/videos/Test HTTP/1.1" 200 OK
+INFO:     172.18.0.1:58102 - "GET /api/videos/Test HTTP/1.1" 200 OK
+INFO:     172.18.0.1:58102 - "GET /api/videos/Test HTTP/1.1" 200 OK
+INFO:     172.18.0.1:58102 - "GET /api/videos/Test HTTP/1.1" 200 OK
+INFO:     172.18.0.1:58102 - "GET /api/videos/Test HTTP/1.1" 200 OK
+INFO:     172.18.0.1:58102 - "GET /api/videos/Test HTTP/1.1" 200 OK
+INFO:     172.18.0.1:58102 - "GET /api/videos/Test HTTP/1.1" 200 OK
+INFO:     172.18.0.1:58102 - "GET /api/videos/Test HTTP/1.1" 200 OK
+INFO:     172.18.0.1:58102 - "GET /api/videos/Test HTTP/1.1" 200 OK
+INFO:     172.18.0.1:58102 - "GET /api/videos/Test HTTP/1.1" 200 OK
+INFO:     172.18.0.1:58102 - "GET /api/videos/Test HTTP/1.1" 200 OK
+INFO:     172.18.0.1:46878 - "GET /api/videos/Test HTTP/1.1" 200 OK
+INFO:     172.18.0.1:46878 - "GET /api/videos/Test HTTP/1.1" 200 OK
+INFO:     172.18.0.1:58598 - "GET /api/videos/Test HTTP/1.1" 200 OK
+INFO:     172.18.0.1:58598 - "GET /api/videos/Test HTTP/1.1" 200 OK
+INFO:     172.18.0.1:47954 - "GET /api/videos/Test HTTP/1.1" 200 OK
+INFO:     172.18.0.1:47954 - "GET /api/videos/Test HTTP/1.1" 200 OK
+INFO:     172.18.0.1:55688 - "GET /api/videos/Test HTTP/1.1" 200 OK
+INFO:     172.18.0.1:55688 - "GET /api/videos/Test HTTP/1.1" 200 OK
+INFO:     172.18.0.1:57998 - "GET /api/videos/Test HTTP/1.1" 200 OK
+INFO:     172.18.0.1:57998 - "GET /api/videos/Test HTTP/1.1" 200 OK
