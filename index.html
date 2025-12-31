@@ -51,8 +51,7 @@
             border-radius: 6px; transition: 0.2s; border: 1px solid transparent;
         }
         .btn-nav:hover { background: var(--surface); color: #fff; border-color: var(--border); }
-        .btn-nav.active { background: var(--primary-glow); color: var(--primary); border-color: rgba(34, 197, 94, 0.2); }
-
+        
         /* LAYOUT */
         .container { max-width: 1600px; margin: 0 auto; padding: 30px; min-height: 80vh; }
         
@@ -99,10 +98,6 @@
         }
         .card.selected .select-overlay { opacity: 1; background: rgba(34, 197, 94, 0.1); }
         .card:hover .select-overlay { opacity: 1; }
-        .chk-big { 
-            width: 24px; height: 24px; accent-color: var(--primary); 
-            transform: scale(1.5); cursor: pointer;
-        }
 
         .video-container { background: #000; position: relative; width: 100%; }
         .horizontal .video-container { aspect-ratio: 16/9; }
@@ -147,7 +142,8 @@
 
         .state-processing { padding: 10px; border-radius: 6px; font-size: 0.8rem; text-align: center; background: rgba(251, 191, 36, 0.1); color: #fbbf24; border: 1px solid rgba(251, 191, 36, 0.2); }
         .state-error { padding: 10px; border-radius: 6px; font-size: 0.8rem; text-align: center; background: rgba(239, 68, 68, 0.1); color: var(--danger); border: 1px solid rgba(239, 68, 68, 0.2); }
-        .spin { animation: spin 1s linear infinite; }
+        
+        .spin { animation: spin 1s linear infinite; display: inline-block; }
         @keyframes spin { 100% { transform: rotate(360deg); } }
 
         .loader-overlay { position: fixed; inset: 0; background: var(--bg); z-index: 500; display: flex; align-items: center; justify-content: center; transition: opacity 0.3s; pointer-events: none; opacity: 0; }
@@ -269,7 +265,6 @@
             CURRENT_MATCH = matchName;
             USER_STATE = {}; 
             
-            // Clear batch mode on new match
             SELECT_MODE = false;
             document.getElementById('selectMode').checked = false;
             SELECTED_FILES.clear();
@@ -320,6 +315,52 @@
             });
         }
 
+        // --- NEW: CONTENT GENERATOR HELPER ---
+        // Generates the inner HTML (text/buttons) separately so we don't redraw video players
+        function getCardContentHtml(subfolder, vid, isProcessing, isVertical) {
+            if (vid.error) {
+                return `
+                    <div class="filename">${vid.filename}</div>
+                    <div class="state-error"><i class="ri-error-warning-fill"></i> ${vid.error}</div>
+                    <button class="btn btn-primary" style="background:var(--danger); color:white" onclick="dismissError('${vid.filename}')">Retry</button>
+                `;
+            } else if (vid.ready) {
+                return `
+                    <div class="filename" style="color:var(--primary)">${vid.filename}</div>
+                    <div style="display:flex; gap:10px">
+                        <a href="${vid.download_url}" class="btn btn-download" style="flex:1"><i class="ri-download-line"></i> Save</a>
+                        <button class="btn btn-refresh" onclick="deleteJob('${subfolder}', '${vid.filename}')"><i class="ri-refresh-line"></i></button>
+                    </div>
+                `;
+            } else if (isProcessing) {
+                return `
+                    <div class="filename">${vid.filename}</div>
+                    <div class="state-processing"><i class="ri-loader-4-line spin"></i> Rendering...</div>
+                `;
+            } else {
+                const availableLogos = getLogosForType(isVertical);
+                const saved = USER_STATE[vid.filename] || {};
+                const defaultLogo = availableLogos.length > 0 ? availableLogos[0] : "";
+                const currentLogo = saved.logo || defaultLogo;
+                
+                const logoOpts = availableLogos.map(l => `<option value="${l}" ${l===currentLogo?'selected':''}>${l}</option>`).join('');
+                const introActive = (saved.useIntro !== undefined ? saved.useIntro : HAS_INTRO) ? 'active' : '';
+                const outroActive = (saved.useOutro !== undefined ? saved.useOutro : HAS_OUTRO) ? 'active' : '';
+
+                return `
+                    <div class="filename">${vid.filename}</div>
+                    <div class="controls-row">
+                        <select class="mini-select" id="logo-${vid.filename}" onchange="updateState('${vid.filename}', 'logo', this.value)">${logoOpts}</select>
+                        <div class="chk-group">
+                            ${HAS_INTRO ? `<label class="chk-btn ${introActive}" onclick="toggleChk(this, '${vid.filename}', 'useIntro')">IN<input type="checkbox" id="intro-${vid.filename}" ${introActive?'checked':''}></label>` : ''}
+                            ${HAS_OUTRO ? `<label class="chk-btn ${outroActive}" onclick="toggleChk(this, '${vid.filename}', 'useOutro')">OUT<input type="checkbox" id="outro-${vid.filename}" ${outroActive?'checked':''}></label>` : ''}
+                        </div>
+                    </div>
+                    <button class="btn btn-primary" onclick="queueJob('${subfolder}', '${vid.filename}')"><i class="ri-flashlight-fill"></i> Brand It</button>
+                `;
+            }
+        }
+
         function renderAllSections() {
             const content = document.getElementById('content');
             if (Object.keys(MATCH_DATA).length === 0) {
@@ -336,6 +377,7 @@
             }
         }
 
+        // --- FIX: SMART DOM UPDATING ---
         function renderSection(subfolder) {
             const container = document.getElementById(`section-${subfolder}`);
             let allVideos = MATCH_DATA[subfolder];
@@ -348,10 +390,23 @@
             
             const start = currentPage * ITEMS_PER_PAGE;
             const pageVideos = allVideos.slice(start, start + ITEMS_PER_PAGE);
-
             const isVertical = subfolder.toLowerCase().includes('reel');
             const icon = isVertical ? 'ri-smartphone-line' : 'ri-macbook-line';
 
+            // 1. Initial Setup (Run Once)
+            let headerDiv = container.querySelector('.section-header');
+            let gridDiv = container.querySelector('.grid');
+            
+            if (!headerDiv || !gridDiv) {
+                container.innerHTML = `
+                    <div class="section-header"></div>
+                    <div class="grid ${isVertical ? 'vertical' : 'horizontal'}"></div>
+                `;
+                headerDiv = container.querySelector('.section-header');
+                gridDiv = container.querySelector('.grid');
+            }
+
+            // 2. Update Header
             let navHtml = '';
             if (totalPages > 1) {
                 navHtml = `<div class="pagination">
@@ -360,96 +415,95 @@
                     <button class="pg-btn" onclick="changePage('${subfolder}', 1)" ${currentPage>=totalPages-1?'disabled':''}><i class="ri-arrow-right-s-line"></i></button>
                 </div>`;
             }
+            headerDiv.innerHTML = `
+                <div class="section-title"><i class="${icon}"></i> ${subfolder} <span class="count-badge">${allVideos.length}</span></div>
+                ${navHtml}
+            `;
 
-            const headerHtml = `
-                <div class="section-header">
-                    <div class="section-title"><i class="${icon}"></i> ${subfolder} <span class="count-badge">${allVideos.length}</span></div>
-                    ${navHtml}
-                </div>`;
-            
-            const gridClass = isVertical ? 'vertical' : 'horizontal';
-            let gridHtml = `<div class="grid ${gridClass}">`;
-            
-            if(pageVideos.length === 0) {
-                gridHtml += `<div style="color:#444; font-size:0.9rem; grid-column:1/-1">No videos available.</div>`;
-            } else {
-                pageVideos.forEach(vid => {
-                    gridHtml += createCardHtml(subfolder, vid, isVertical);
-                });
-            }
-            gridHtml += `</div>`;
-            container.innerHTML = headerHtml + gridHtml;
-        }
+            // 3. Smart Card Updates
+            const currentFiles = new Set(pageVideos.map(v => v.filename));
 
-        function createCardHtml(subfolder, vid, isVertical) {
-            const isProcessing = vid.queued || PROCESSING_SET.has(vid.filename);
-            const isSelected = SELECTED_FILES.has(vid.filename);
-            
-            let stateClass = '';
-            if(vid.error) stateClass = 'error';
-            else if(vid.ready) stateClass = 'ready';
-            else if(isProcessing) stateClass = 'processing';
-            if(isSelected) stateClass += ' selected';
+            // A. Remove old cards
+            Array.from(gridDiv.children).forEach(card => {
+                const fname = card.dataset.filename;
+                // If the card is not in the current page list OR if it's the "No videos" msg
+                if (fname && !currentFiles.has(fname)) {
+                    card.remove();
+                } else if (!fname && pageVideos.length > 0) {
+                    card.remove(); // Remove "No videos available" text
+                }
+            });
 
-            let overlayHtml = '';
-            if(SELECT_MODE && !isProcessing) {
-                overlayHtml = `<div class="select-overlay" onclick="toggleSelection('${vid.filename}', ${isVertical})">
-                    ${isSelected ? '<i class="ri-checkbox-circle-fill" style="font-size:3rem; color:var(--primary)"></i>' : '<i class="ri-checkbox-blank-circle-line" style="font-size:3rem; color:rgba(255,255,255,0.5)"></i>'}
-                </div>`;
-            }
+            // B. Add or Update cards
+            pageVideos.forEach(vid => {
+                let card = gridDiv.querySelector(`.card[data-filename="${vid.filename}"]`);
+                const isProcessing = vid.queued || PROCESSING_SET.has(vid.filename);
+                const isSelected = SELECTED_FILES.has(vid.filename);
 
-            let innerContent = '';
+                // Determine CSS Classes
+                let stateClass = 'card';
+                if(vid.error) stateClass += ' error';
+                else if(vid.ready) stateClass += ' ready';
+                else if(isProcessing) stateClass += ' processing';
+                if(isSelected) stateClass += ' selected';
 
-            if (vid.error) {
-                innerContent = `
-                    <div class="filename">${vid.filename}</div>
-                    <div class="state-error"><i class="ri-error-warning-fill"></i> ${vid.error}</div>
-                    <button class="btn btn-primary" style="background:var(--danger); color:white" onclick="dismissError('${vid.filename}')">Retry</button>
-                `;
-            } else if (vid.ready) {
-                innerContent = `
-                    <div class="filename" style="color:var(--primary)">${vid.filename}</div>
-                    <div style="display:flex; gap:10px">
-                        <a href="${vid.download_url}" class="btn btn-download" style="flex:1"><i class="ri-download-line"></i> Save</a>
-                        <button class="btn btn-refresh" onclick="deleteJob('${subfolder}', '${vid.filename}')"><i class="ri-refresh-line"></i></button>
-                    </div>
-                `;
-            } else if (isProcessing) {
-                innerContent = `
-                    <div class="filename">${vid.filename}</div>
-                    <div class="state-processing"><i class="ri-loader-4-line spin"></i> Rendering...</div>
-                `;
-            } else {
-                // --- SMART DROPDOWN LOGIC ---
-                const availableLogos = getLogosForType(isVertical);
-                const saved = USER_STATE[vid.filename] || {};
-                const defaultLogo = availableLogos.length > 0 ? availableLogos[0] : "";
-                const currentLogo = saved.logo || defaultLogo;
-                
-                const logoOpts = availableLogos.map(l => `<option value="${l}" ${l===currentLogo?'selected':''}>${l}</option>`).join('');
+                // Generate Content HTML
+                const contentHtml = getCardContentHtml(subfolder, vid, isProcessing, isVertical);
 
-                const introActive = (saved.useIntro !== undefined ? saved.useIntro : HAS_INTRO) ? 'active' : '';
-                const outroActive = (saved.useOutro !== undefined ? saved.useOutro : HAS_OUTRO) ? 'active' : '';
+                // Handle Overlay HTML
+                let overlayHtml = '';
+                if(SELECT_MODE && !isProcessing) {
+                    overlayHtml = `<div class="select-overlay" onclick="toggleSelection('${vid.filename}', ${isVertical})">
+                        ${isSelected ? '<i class="ri-checkbox-circle-fill" style="font-size:3rem; color:var(--primary)"></i>' : '<i class="ri-checkbox-blank-circle-line" style="font-size:3rem; color:rgba(255,255,255,0.5)"></i>'}
+                    </div>`;
+                }
 
-                innerContent = `
-                    <div class="filename">${vid.filename}</div>
-                    <div class="controls-row">
-                        <select class="mini-select" id="logo-${vid.filename}" onchange="updateState('${vid.filename}', 'logo', this.value)">${logoOpts}</select>
-                        <div class="chk-group">
-                            ${HAS_INTRO ? `<label class="chk-btn ${introActive}" onclick="toggleChk(this, '${vid.filename}', 'useIntro')">IN<input type="checkbox" id="intro-${vid.filename}" ${introActive?'checked':''}></label>` : ''}
-                            ${HAS_OUTRO ? `<label class="chk-btn ${outroActive}" onclick="toggleChk(this, '${vid.filename}', 'useOutro')">OUT<input type="checkbox" id="outro-${vid.filename}" ${outroActive?'checked':''}></label>` : ''}
+                if (card) {
+                    // --- UPDATE EXISTING ---
+                    if (card.className !== stateClass) card.className = stateClass;
+                    
+                    // Update Overlay
+                    const overlay = card.querySelector('.select-overlay');
+                    if (overlay) {
+                        if (overlay.outerHTML !== overlayHtml) overlay.outerHTML = overlayHtml;
+                    } else if (overlayHtml) {
+                        card.insertAdjacentHTML('afterbegin', overlayHtml);
+                    }
+
+                    // Update Content (ONLY if changed)
+                    const contentDiv = card.querySelector('.card-content');
+                    // We check if the processing state changed to avoid interrupting checkboxes
+                    const wasProcessing = contentDiv.innerHTML.includes('Rendering...');
+                    const isNowProcessing = contentHtml.includes('Rendering...');
+                    
+                    if (contentDiv.innerHTML !== contentHtml) {
+                        // Crucial: Only update if text/buttons actually changed
+                        // This prevents small cursor jumps, though less likely with this layout
+                        contentDiv.innerHTML = contentHtml;
+                    }
+
+                } else {
+                    // --- CREATE NEW ---
+                    const temp = document.createElement('div');
+                    // NOTE: Added preload="metadata" and thumbnail_url check
+                    const posterAttr = vid.thumbnail_url ? `poster="${vid.thumbnail_url}"` : '';
+                    
+                    temp.innerHTML = `
+                        <div class="card ${stateClass}" data-filename="${vid.filename}">
+                            ${overlayHtml}
+                            <div class="video-container">
+                                <video src="${vid.ready ? vid.download_url : vid.url}" ${posterAttr} controls preload="metadata"></video>
+                            </div>
+                            <div class="card-content">${contentHtml}</div>
                         </div>
-                    </div>
-                    <button class="btn btn-primary" onclick="queueJob('${subfolder}', '${vid.filename}')"><i class="ri-flashlight-fill"></i> Brand It</button>
-                `;
-            }
+                    `;
+                    gridDiv.appendChild(temp.firstElementChild);
+                }
+            });
 
-            return `
-            <div class="card ${stateClass}" data-filename="${vid.filename}">
-                ${overlayHtml}
-                <div class="video-container"><video src="${vid.ready ? vid.download_url : vid.url}" controls preload="none"></video></div>
-                <div class="card-content">${innerContent}</div>
-            </div>`;
+            if(pageVideos.length === 0) {
+                gridDiv.innerHTML = `<div style="color:#444; font-size:0.9rem; grid-column:1/-1">No videos available.</div>`;
+            }
         }
 
         // --- BATCH LOGIC ---
@@ -457,19 +511,21 @@
             if (SELECTED_FILES.has(filename)) SELECTED_FILES.delete(filename);
             else {
                 SELECTED_FILES.add(filename);
-                LAST_SELECTED_TYPE_VERTICAL = isVertical; // Update hint
+                LAST_SELECTED_TYPE_VERTICAL = isVertical; 
             }
             updateBatchBar();
             
-            // Efficient UI Update
+            // UI Update (Fast)
             const card = document.querySelector(`.card[data-filename="${filename}"]`);
             if(card) {
                 if(SELECTED_FILES.has(filename)) {
                     card.classList.add('selected');
-                    card.querySelector('.select-overlay').innerHTML = '<i class="ri-checkbox-circle-fill" style="font-size:3rem; color:var(--primary)"></i>';
+                    const ov = card.querySelector('.select-overlay');
+                    if(ov) ov.innerHTML = '<i class="ri-checkbox-circle-fill" style="font-size:3rem; color:var(--primary)"></i>';
                 } else {
                     card.classList.remove('selected');
-                    card.querySelector('.select-overlay').innerHTML = '<i class="ri-checkbox-blank-circle-line" style="font-size:3rem; color:rgba(255,255,255,0.5)"></i>';
+                    const ov = card.querySelector('.select-overlay');
+                    if(ov) ov.innerHTML = '<i class="ri-checkbox-blank-circle-line" style="font-size:3rem; color:rgba(255,255,255,0.5)"></i>';
                 }
             }
         }
@@ -479,7 +535,6 @@
             const count = document.getElementById('batchCount');
             count.innerText = `${SELECTED_FILES.size} Selected`;
             
-            // --- SMART BATCH DROPDOWN ---
             const batchSel = document.getElementById('batchLogoSelect');
             const validLogos = getLogosForType(LAST_SELECTED_TYPE_VERTICAL);
             
@@ -555,7 +610,6 @@
 
         async function queueJob(subfolder, filename, batchLogo = null) {
             const settings = getJobSettings(filename);
-            // If batchLogo is provided (from dropdown), it overrides the individual setting
             const finalLogo = batchLogo ? batchLogo : settings.logo;
             
             PROCESSING_SET.add(filename);

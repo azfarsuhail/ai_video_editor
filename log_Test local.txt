@@ -1,0 +1,335 @@
+
+[CONFIG] Match: Test local
+[CONFIG] Source: srt://203.130.9.34:7001
+[STARTUP] Cleaning potential zombie processes...
+[OCR] Initializing RTX 4060...
+[OCR] System Ready.
+[SYSTEM LIVE] Watching: Visuals + Audio + Motion
+[WATCHDOG] Starting Engine Processes...
+[AUDIO] Listening for Crowd Roar (via Pipe)...
+[EVENT] 🏃 MASSIVE MOTION (Score: 126.3)
+[QUEUE] Motion Detected! Processing...
+[EVENT] 🏃 MASSIVE MOTION (Score: 89.7)
+[QUEUE] Motion Detected! Processing...
+[CLIP SAVED] ball_1767192629.mp4
+[VERTICAL READY] ball_1767192629_V.mp4
+[EVENT] 🏃 MASSIVE MOTION (Score: 21.7)
+[QUEUE] Motion Detected! Processing...
+[CLIP SAVED] ball_1767192637.mp4
+[VERTICAL READY] ball_1767192637_V.mp4
+[EVENT] 👁️ OCR FOUND: 6
+[QUEUE] OCR-6 Detected! Processing...
+[CLIP SAVED] ball_1767192646.mp4
+[VERTICAL READY] ball_1767192646_V.mp4
+[EVENT] 👁️ OCR FOUND: 6
+[QUEUE] OCR-6 Detected! Processing...
+[EVENT] 🏃 MASSIVE MOTION (Score: 21.4)
+[QUEUE] Motion Detected! Processing...
+[CLIP SAVED] ball_1767192658.mp4
+[VERTICAL READY] ball_1767192658_V.mp4
+[CLIP SAVED] ball_1767192663.mp4
+[VERTICAL READY] ball_1767192663_V.mp4
+[EVENT] 🏃 MASSIVE MOTION (Score: 20.8)
+[QUEUE] Motion Detected! Processing...
+[CLIP SAVED] ball_1767192672.mp4
+[VERTICAL READY] ball_1767192672_V.mp4
+[EVENT] 🏃 MASSIVE MOTION (Score: 22.8)
+[QUEUE] Motion Detected! Processing...
+[CLIP SAVED] ball_1767192681.mp4
+[VERTICAL READY] ball_1767192681_V.mp4
+[EVENT] 🏃 MASSIVE MOTION (Score: 20.4)
+[QUEUE] Motion Detected! Processing...
+[EVENT] 👁️ OCR FOUND: 4
+[QUEUE] OCR-4 Detected! Processing...
+[CLIP SAVED] ball_1767192693.mp4
+[VERTICAL READY] ball_1767192693_V.mp4
+[EVENT] 👁️ OCR FOUND: 6
+[QUEUE] OCR-6 Detected! Processing...
+[CLIP SAVED] ball_1767192702.mp4
+[VERTICAL READY] ball_1767192702_V.mp4
+[EVENT] 👁️ OCR FOUND: 6
+[QUEUE] OCR-6 Detected! Processing...
+[CLIP SAVED] ball_1767192707.mp4
+[VERTICAL READY] ball_1767192707_V.mp4
+[EVENT] 👁️ OCR FOUND: 6
+[QUEUE] OCR-6 Detected! Processing...
+[CLIP SAVED] ball_1767192713.mp4
+[VERTICAL READY] ball_1767192713_V.mp4
+[EVENT] 👁️ OCR FOUND: 6
+[QUEUE] OCR-6 Detected! Processing...
+[CLIP SAVED] ball_1767192718.mp4
+[EVENT] 👁️ OCR FOUND: 6
+[QUEUE] OCR-6 Detected! Processing...
+[VERTICAL READY] ball_1767192718_V.mp4
+[EVENT] 👁️ OCR FOUND: 6
+[QUEUE] OCR-6 Detected! Processing...
+[CLIP SAVED] ball_1767192723.mp4
+[VERTICAL READY] ball_1767192723_V.mp4
+[CLIP SAVED] ball_1767192728.mp4
+[VERTICAL READY] ball_1767192728_V.mp4
+[EVENT] 👁️ OCR FOUND: 6
+[QUEUE] OCR-6 Detected! Processing...
+[EVENT] 👁️ OCR FOUND: 6
+[QUEUE] OCR-6 Detected! Processing...
+[CLIP SAVED] ball_1767192734.mp4
+[VERTICAL READY] ball_1767192734_V.mp4
+[CLIP SAVED] ball_1767192738.mp4
+[VERTICAL READY] ball_1767192738_V.mp4
+[EVENT] 👁️ OCR FOUND: 6
+[QUEUE] OCR-6 Detected! Processing...
+[CLIP SAVED] ball_1767192744.mp4
+[EVENT] 👁️ OCR FOUND: 6
+[QUEUE] OCR-6 Detected! Processing...
+[VERTICAL READY] ball_1767192744_V.mp4
+[CLIP SAVED] ball_1767192749.mp4
+[VERTICAL READY] ball_1767192749_V.mp4
+[EVENT] 👁️ OCR FOUND: 6
+[QUEUE] OCR-6 Detected! Processing...
+[CLIP SAVED] ball_1767192753.mp4
+[VERTICAL READY] ball_1767192753_V.mp4
+[EVENT] 👁️ OCR FOUND: 6
+[QUEUE] OCR-6 Detected! Processing...
+[EVENT] 👁️ OCR FOUND: 6
+[QUEUE] OCR-6 Detected! Processing...
+[CLIP SAVED] ball_1767192759.mp4
+[VERTICAL READY] ball_1767192759_V.mp4
+[CLIP SAVED] ball_1767192764.mp4
+[VERTICAL READY] ball_1767192764_V.mp4
+[EVENT] 🏃 MASSIVE MOTION (Score: 21.1)
+[QUEUE] Motion Detected! Processing...
+[CLIP SAVED] ball_1767192769.mp4
+[VERTICAL READY] ball_1767192769_V.mp4
+[CLIP SAVED] ball_1767192774.mp4
+[VERTICAL READY] ball_1767192774_V.mp4
+[CLIP SAVED] ball_1767192782.mp4
+[VERTICAL READY] ball_1767192782_V.mp4
+[EVENT] 🏃 MASSIVE MOTION (Score: 27.7)
+[QUEUE] Motion Detected! Processing...
+[EVENT] 🏃 MASSIVE MOTION (Score: 29.5)
+[QUEUE] Motion Detected! Processing...
+[CLIP SAVED] ball_1767192803.mp4
+[VERTICAL READY] ball_1767192803_V.mp4
+[EVENT] 👁️ OCR FOUND: 6
+[QUEUE] OCR-6 Detected! Processing...
+[CLIP SAVED] ball_1767192812.mp4
+[VERTICAL READY] ball_1767192812_V.mp4
+[CLIP SAVED] ball_1767192822.mp4
+[VERTICAL READY] ball_1767192822_V.mp4
+[EVENT] 🏃 MASSIVE MOTION (Score: 27.4)
+[QUEUE] Motion Detected! Processing...
+[EVENT] 👁️ OCR FOUND: 4
+[QUEUE] OCR-4 Detected! Processing...
+[CLIP SAVED] ball_1767192842.mp4
+[VERTICAL READY] ball_1767192842_V.mp4
+[CLIP SAVED] ball_1767192855.mp4
+[VERTICAL READY] ball_1767192855_V.mp4
+[EVENT] 🏃 MASSIVE MOTION (Score: 96.7)
+[QUEUE] Motion Detected! Processing...
+[EVENT] 🏃 MASSIVE MOTION (Score: 79.4)
+[QUEUE] Motion Detected! Processing...
+[CLIP SAVED] ball_1767192919.mp4
+[VERTICAL READY] ball_1767192919_V.mp4
+[EVENT] 👁️ OCR FOUND: 4
+[QUEUE] OCR-4 Detected! Processing...
+[CLIP SAVED] ball_1767192928.mp4
+[VERTICAL READY] ball_1767192928_V.mp4
+[EVENT] 🏃 MASSIVE MOTION (Score: 26.8)
+[QUEUE] Motion Detected! Processing...
+[CLIP SAVED] ball_1767192934.mp4
+[VERTICAL READY] ball_1767192934_V.mp4
+[EVENT] 🏃 MASSIVE MOTION (Score: 22.6)
+[QUEUE] Motion Detected! Processing...
+[CLIP SAVED] ball_1767192943.mp4
+[VERTICAL READY] ball_1767192943_V.mp4
+[EVENT] 🏃 MASSIVE MOTION (Score: 20.2)
+[QUEUE] Motion Detected! Processing...
+[CLIP SAVED] ball_1767192953.mp4
+[VERTICAL READY] ball_1767192953_V.mp4
+[EVENT] 🏃 MASSIVE MOTION (Score: 48.0)
+[QUEUE] Motion Detected! Processing...
+[CLIP SAVED] ball_1767192963.mp4
+[VERTICAL READY] ball_1767192963_V.mp4
+[EVENT] 🏃 MASSIVE MOTION (Score: 26.3)
+[QUEUE] Motion Detected! Processing...
+[CLIP SAVED] ball_1767192976.mp4
+[VERTICAL READY] ball_1767192976_V.mp4
+[EVENT] 🏃 MASSIVE MOTION (Score: 20.2)
+[QUEUE] Motion Detected! Processing...
+[CLIP SAVED] ball_1767192985.mp4
+[VERTICAL READY] ball_1767192985_V.mp4
+[EVENT] 🏃 MASSIVE MOTION (Score: 22.9)
+[QUEUE] Motion Detected! Processing...
+[CLIP SAVED] ball_1767192995.mp4
+[VERTICAL READY] ball_1767192995_V.mp4
+[CLIP SAVED] ball_1767193005.mp4
+[VERTICAL READY] ball_1767193005_V.mp4
+[EVENT] 🏃 MASSIVE MOTION (Score: 36.5)
+[QUEUE] Motion Detected! Processing...
+[EVENT] 🏃 MASSIVE MOTION (Score: 73.7)
+[QUEUE] Motion Detected! Processing...
+[CLIP SAVED] ball_1767193020.mp4
+[VERTICAL READY] ball_1767193020_V.mp4
+[EVENT] 👁️ OCR FOUND: OUT
+[QUEUE] OCR-OUT Detected! Processing...
+[CLIP SAVED] ball_1767193029.mp4
+[VERTICAL READY] ball_1767193029_V.mp4
+[EVENT] 👁️ OCR FOUND: OUT
+[QUEUE] OCR-OUT Detected! Processing...
+[EVENT] 👁️ OCR FOUND: OUT
+[QUEUE] OCR-OUT Detected! Processing...
+[CLIP SAVED] ball_1767193043.mp4
+[VERTICAL READY] ball_1767193043_V.mp4
+[EVENT] 👁️ OCR FOUND: 4
+[QUEUE] OCR-4 Detected! Processing...
+[CLIP SAVED] ball_1767193048.mp4
+[VERTICAL READY] ball_1767193048_V.mp4
+[CLIP SAVED] ball_1767193053.mp4
+[VERTICAL READY] ball_1767193053_V.mp4
+[EVENT] 🏃 MASSIVE MOTION (Score: 36.0)
+[QUEUE] Motion Detected! Processing...
+[CLIP SAVED] ball_1767193060.mp4
+[VERTICAL READY] ball_1767193060_V.mp4
+[EVENT] 🏃 MASSIVE MOTION (Score: 22.8)
+[QUEUE] Motion Detected! Processing...
+[EVENT] 👁️ OCR FOUND: 4
+[QUEUE] OCR-4 Detected! Processing...
+[CLIP SAVED] ball_1767193069.mp4
+[VERTICAL READY] ball_1767193069_V.mp4
+[CLIP SAVED] ball_1767193077.mp4
+[VERTICAL READY] ball_1767193077_V.mp4
+[CLIP SAVED] ball_1767193083.mp4
+[VERTICAL READY] ball_1767193083_V.mp4
+[EVENT] 🏃 MASSIVE MOTION (Score: 21.4)
+[QUEUE] Motion Detected! Processing...
+[EVENT] 🏃 MASSIVE MOTION (Score: 57.7)
+[QUEUE] Motion Detected! Processing...
+[CLIP SAVED] ball_1767193100.mp4
+[VERTICAL READY] ball_1767193100_V.mp4
+[CLIP SAVED] ball_1767193112.mp4
+[VERTICAL READY] ball_1767193112_V.mp4
+[EVENT] 🏃 MASSIVE MOTION (Score: 21.1)
+[QUEUE] Motion Detected! Processing...
+[EVENT] 🏃 MASSIVE MOTION (Score: 37.1)
+[QUEUE] Motion Detected! Processing...
+[CLIP SAVED] ball_1767193133.mp4
+[VERTICAL READY] ball_1767193133_V.mp4
+[EVENT] 🏃 MASSIVE MOTION (Score: 64.5)
+[QUEUE] Motion Detected! Processing...
+[CLIP SAVED] ball_1767193144.mp4
+[VERTICAL READY] ball_1767193144_V.mp4
+[EVENT] 👁️ OCR FOUND: WICKET
+[QUEUE] OCR-WICKET Detected! Processing...
+[EVENT] 👁️ OCR FOUND: WICKET
+[QUEUE] OCR-WICKET Detected! Processing...
+[CLIP SAVED] ball_1767193155.mp4
+[VERTICAL READY] ball_1767193155_V.mp4
+[EVENT] 🏃 MASSIVE MOTION (Score: 82.0)
+[QUEUE] Motion Detected! Processing...
+[CLIP SAVED] ball_1767193160.mp4
+[VERTICAL READY] ball_1767193160_V.mp4
+[CLIP SAVED] ball_1767193165.mp4
+[VERTICAL READY] ball_1767193165_V.mp4
+[EVENT] 🏃 MASSIVE MOTION (Score: 37.8)
+[QUEUE] Motion Detected! Processing...
+[CLIP SAVED] ball_1767193174.mp4
+[VERTICAL READY] ball_1767193174_V.mp4
+[EVENT] 🏃 MASSIVE MOTION (Score: 55.0)
+[QUEUE] Motion Detected! Processing...
+[CLIP SAVED] ball_1767193183.mp4
+[VERTICAL READY] ball_1767193183_V.mp4
+[CLIP SAVED] ball_1767193196.mp4
+[VERTICAL READY] ball_1767193196_V.mp4
+[EVENT] 🏃 MASSIVE MOTION (Score: 54.4)
+[QUEUE] Motion Detected! Processing...
+[EVENT] 🏃 MASSIVE MOTION (Score: 39.8)
+[QUEUE] Motion Detected! Processing...
+[CLIP SAVED] ball_1767193211.mp4
+[VERTICAL READY] ball_1767193211_V.mp4
+[EVENT] 🏃 MASSIVE MOTION (Score: 63.6)
+[QUEUE] Motion Detected! Processing...
+[CLIP SAVED] ball_1767193223.mp4
+[VERTICAL READY] ball_1767193223_V.mp4
+[EVENT] 🏃 MASSIVE MOTION (Score: 39.9)
+[QUEUE] Motion Detected! Processing...
+[CLIP SAVED] ball_1767193237.mp4
+[VERTICAL READY] ball_1767193237_V.mp4
+[EVENT] 👁️ OCR FOUND: 4
+[QUEUE] OCR-4 Detected! Processing...
+[EVENT] 👁️ OCR FOUND: 4
+[QUEUE] OCR-4 Detected! Processing...
+[CLIP SAVED] ball_1767193250.mp4
+[VERTICAL READY] ball_1767193250_V.mp4
+[EVENT] 👁️ OCR FOUND: 4
+[QUEUE] OCR-4 Detected! Processing...
+[EVENT] 👁️ OCR FOUND: 4
+[QUEUE] OCR-4 Detected! Processing...
+[CLIP SAVED] ball_1767193258.mp4
+[VERTICAL READY] ball_1767193258_V.mp4
+[CLIP SAVED] ball_1767193263.mp4
+[VERTICAL READY] ball_1767193263_V.mp4
+[EVENT] 👁️ OCR FOUND: 4
+[QUEUE] OCR-4 Detected! Processing...
+[CLIP SAVED] ball_1767193278.mp4
+[CLIP SAVED] ball_1767193268.mp4
+[CLIP SAVED] ball_1767193273.mp4
+[VERTICAL READY] ball_1767193273_V.mp4
+[VERTICAL READY] ball_1767193268_V.mp4
+[VERTICAL READY] ball_1767193278_V.mp4
+[EVENT] 👁️ OCR FOUND: 4
+[QUEUE] OCR-4 Detected! Processing...
+[EVENT] 👁️ OCR FOUND: 4
+[QUEUE] OCR-4 Detected! Processing...
+[SRT] Pipe Empty. Possible stream drop.
+[WATCHDOG] Cleaning up processes...
+[WATCHDOG] Starting Engine Processes...
+[AUDIO] Listening for Crowd Roar (via Pipe)...
+[CLIP SAVED] ball_1767193317.mp4
+[VERTICAL READY] ball_1767193317_V.mp4
+[CLIP SAVED] ball_1767193318.mp4
+[VERTICAL READY] ball_1767193318_V.mp4
+[EVENT] 🏃 MASSIVE MOTION (Score: 26.7)
+[QUEUE] Motion Detected! Processing...
+[EVENT] 👁️ OCR FOUND: 4
+[QUEUE] OCR-4 Detected! Processing...
+[EVENT] 👁️ OCR FOUND: 4
+[QUEUE] OCR-4 Detected! Processing...
+[CLIP SAVED] ball_1767193340.mp4
+[VERTICAL READY] ball_1767193340_V.mp4
+[EVENT] 👁️ OCR FOUND: 4
+[QUEUE] OCR-4 Detected! Processing...
+[CLIP SAVED] ball_1767193347.mp4
+[VERTICAL READY] ball_1767193347_V.mp4
+[EVENT] 👁️ OCR FOUND: 4
+[QUEUE] OCR-4 Detected! Processing...
+[CLIP SAVED] ball_1767193353.mp4
+[VERTICAL READY] ball_1767193353_V.mp4
+[EVENT] 👁️ OCR FOUND: 4
+[QUEUE] OCR-4 Detected! Processing...
+[EVENT] 👁️ OCR FOUND: 4
+[QUEUE] OCR-4 Detected! Processing...
+[CLIP SAVED] ball_1767193358.mp4
+[VERTICAL READY] ball_1767193358_V.mp4
+[EVENT] 👁️ OCR FOUND: 4
+[QUEUE] OCR-4 Detected! Processing...
+[CLIP SAVED] ball_1767193363.mp4
+[VERTICAL READY] ball_1767193363_V.mp4
+[CLIP SAVED] ball_1767193368.mp4
+[VERTICAL READY] ball_1767193368_V.mp4
+[CLIP SAVED] ball_1767193373.mp4
+[VERTICAL READY] ball_1767193373_V.mp4
+[CLIP SAVED] ball_1767193378.mp4
+[VERTICAL READY] ball_1767193378_V.mp4
+[WATCHDOG] No data for 10s. Restarting...
+[WATCHDOG] Cleaning up processes...
+[WATCHDOG] Starting Engine Processes...
+[AUDIO] Listening for Crowd Roar (via Pipe)...
+[EVENT] 👁️ OCR FOUND: 4
+[QUEUE] OCR-4 Detected! Processing...
+[EVENT] 👁️ OCR FOUND: 4
+[QUEUE] OCR-4 Detected! Processing...
+[WATCHDOG] No data for 10s. Restarting...
+[WATCHDOG] Cleaning up processes...
+[CLIP SAVED] ball_1767193424.mp4
+[CLIP SAVED] ball_1767193420.mp4
+[VERTICAL READY] ball_1767193420_V.mp4[VERTICAL READY] ball_1767193424_V.mp4
+

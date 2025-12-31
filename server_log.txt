@@ -1,41 +1,61 @@
-INFO:     Started server process [7]
+INFO:     Started server process [27]
 INFO:     Waiting for application startup.
 INFO:     Application startup complete.
 INFO:     Uvicorn running on http://0.0.0.0:5003 (Press CTRL+C to quit)
-INFO:     172.18.0.1:54174 - "GET /api/videos/Test HTTP/1.1" 200 OK
-INFO:     172.18.0.1:54174 - "GET /api/videos/Test HTTP/1.1" 200 OK
-INFO:     172.18.0.1:54182 - "GET /api/videos/Test HTTP/1.1" 200 OK
-INFO:     172.18.0.1:54182 - "GET /api/videos/Test HTTP/1.1" 200 OK
-INFO:     172.18.0.1:58102 - "GET /api/videos/Test HTTP/1.1" 200 OK
-INFO:     172.18.0.1:58102 - "GET /api/videos/Test HTTP/1.1" 200 OK
-INFO:     172.18.0.1:58102 - "GET /api/videos/Test HTTP/1.1" 200 OK
-INFO:     172.18.0.1:58102 - "GET /api/videos/Test HTTP/1.1" 200 OK
-INFO:     172.18.0.1:58102 - "GET /api/videos/Test HTTP/1.1" 200 OK
-INFO:     172.18.0.1:58102 - "GET /api/videos/Test HTTP/1.1" 200 OK
-INFO:     172.18.0.1:58102 - "GET /api/videos/Test HTTP/1.1" 200 OK
-INFO:     172.18.0.1:58102 - "GET /api/videos/Test HTTP/1.1" 200 OK
-INFO:     172.18.0.1:58102 - "GET /api/videos/Test HTTP/1.1" 200 OK
-INFO:     172.18.0.1:58102 - "GET /api/videos/Test HTTP/1.1" 200 OK
-INFO:     172.18.0.1:58102 - "GET /api/videos/Test HTTP/1.1" 200 OK
-INFO:     172.18.0.1:58102 - "GET /api/videos/Test HTTP/1.1" 200 OK
-INFO:     172.18.0.1:58102 - "GET /api/videos/Test HTTP/1.1" 200 OK
-INFO:     172.18.0.1:58102 - "GET /api/videos/Test HTTP/1.1" 200 OK
-INFO:     172.18.0.1:58102 - "GET /api/videos/Test HTTP/1.1" 200 OK
-INFO:     172.18.0.1:58102 - "GET /api/videos/Test HTTP/1.1" 200 OK
-INFO:     172.18.0.1:58102 - "GET /api/videos/Test HTTP/1.1" 200 OK
-INFO:     172.18.0.1:58102 - "GET /api/videos/Test HTTP/1.1" 200 OK
-INFO:     172.18.0.1:58102 - "GET /api/videos/Test HTTP/1.1" 200 OK
-INFO:     172.18.0.1:58102 - "GET /api/videos/Test HTTP/1.1" 200 OK
-INFO:     172.18.0.1:58102 - "GET /api/videos/Test HTTP/1.1" 200 OK
-INFO:     172.18.0.1:58102 - "GET /api/videos/Test HTTP/1.1" 200 OK
-INFO:     172.18.0.1:58102 - "GET /api/videos/Test HTTP/1.1" 200 OK
-INFO:     172.18.0.1:46878 - "GET /api/videos/Test HTTP/1.1" 200 OK
-INFO:     172.18.0.1:46878 - "GET /api/videos/Test HTTP/1.1" 200 OK
-INFO:     172.18.0.1:58598 - "GET /api/videos/Test HTTP/1.1" 200 OK
-INFO:     172.18.0.1:58598 - "GET /api/videos/Test HTTP/1.1" 200 OK
-INFO:     172.18.0.1:47954 - "GET /api/videos/Test HTTP/1.1" 200 OK
-INFO:     172.18.0.1:47954 - "GET /api/videos/Test HTTP/1.1" 200 OK
-INFO:     172.18.0.1:55688 - "GET /api/videos/Test HTTP/1.1" 200 OK
-INFO:     172.18.0.1:55688 - "GET /api/videos/Test HTTP/1.1" 200 OK
-INFO:     172.18.0.1:57998 - "GET /api/videos/Test HTTP/1.1" 200 OK
-INFO:     172.18.0.1:57998 - "GET /api/videos/Test HTTP/1.1" 200 OK
+INFO:     172.19.0.1:52068 - "GET /api/videos/Test%20local HTTP/1.1" 200 OK
+INFO:     172.19.0.1:54264 - "GET /api/stream_status HTTP/1.1" 401 Unauthorized
+INFO:     172.19.0.1:54274 - "GET /manager HTTP/1.1" 401 Unauthorized
+INFO:     172.19.0.1:54264 - "GET /api/stream_status HTTP/1.1" 401 Unauthorized
+INFO:     172.19.0.1:54274 - "GET /manager HTTP/1.1" 401 Unauthorized
+INFO:     172.19.0.1:54274 - "GET /api/videos/Test%20local HTTP/1.1" 200 OK
+INFO:     172.19.0.1:54274 - "GET / HTTP/1.1" 200 OK
+INFO:     172.19.0.1:54274 - "GET /api/config HTTP/1.1" 200 OK
+INFO:     172.19.0.1:54274 - "GET /api/matches HTTP/1.1" 200 OK
+INFO:     172.19.0.1:54274 - "GET /api/videos/Test%20local HTTP/1.1" 200 OK
+INFO:     172.19.0.1:54274 - "GET /download/Test%20local/ball_1767192629.mp4 HTTP/1.1" 206 Partial Content
+INFO:     172.19.0.1:54280 - "GET /download/Test%20local/ball_1767192637.mp4 HTTP/1.1" 206 Partial Content
+INFO:     172.19.0.1:54282 - "GET /stream/Test%20local/Full%20Screen/ball_1767192646.mp4 HTTP/1.1" 206 Partial Content
+INFO:     172.19.0.1:54294 - "GET /download/Test%20local/ball_1767192658.mp4 HTTP/1.1" 206 Partial Content
+INFO:     172.19.0.1:54306 - "GET /stream/Test%20local/Full%20Screen/ball_1767192672.mp4 HTTP/1.1" 206 Partial Content
+INFO:     172.19.0.1:54302 - "GET /stream/Test%20local/Full%20Screen/ball_1767192663.mp4 HTTP/1.1" 206 Partial Content
+INFO:     172.19.0.1:54322 - "GET /download/Test%20local/ball_1767192629.mp4 HTTP/1.1" 206 Partial Content
+INFO:     172.19.0.1:54344 - "GET /stream/Test%20local/Full%20Screen/ball_1767192672.mp4 HTTP/1.1" 206 Partial Content
+INFO:     172.19.0.1:54338 - "GET /download/Test%20local/ball_1767192637.mp4 HTTP/1.1" 206 Partial Content
+INFO:     172.19.0.1:54340 - "GET /download/Test%20local/ball_1767192658.mp4 HTTP/1.1" 206 Partial Content
+INFO:     172.19.0.1:54352 - "GET /stream/Test%20local/Full%20Screen/ball_1767192663.mp4 HTTP/1.1" 206 Partial Content
+INFO:     172.19.0.1:54366 - "GET /stream/Test%20local/Full%20Screen/ball_1767192681.mp4 HTTP/1.1" 206 Partial Content
+INFO:     172.19.0.1:54378 - "GET /stream/Test%20local/Full%20Screen/ball_1767192693.mp4 HTTP/1.1" 206 Partial Content
+INFO:     172.19.0.1:54392 - "GET /stream/Test%20local/Full%20Screen/ball_1767192702.mp4 HTTP/1.1" 206 Partial Content
+INFO:     172.19.0.1:54400 - "GET /stream/Test%20local/Full%20Screen/ball_1767192707.mp4 HTTP/1.1" 206 Partial Content
+INFO:     172.19.0.1:54408 - "GET /stream/Test%20local/Full%20Screen/ball_1767192713.mp4 HTTP/1.1" 206 Partial Content
+INFO:     172.19.0.1:54366 - "GET /stream/Test%20local/Full%20Screen/ball_1767192693.mp4 HTTP/1.1" 206 Partial Content
+INFO:     172.19.0.1:54412 - "GET /stream/Test%20local/Full%20Screen/ball_1767192718.mp4 HTTP/1.1" 206 Partial Content
+INFO:     172.19.0.1:54422 - "GET /stream/Test%20local/Full%20Screen/ball_1767192702.mp4 HTTP/1.1" 206 Partial Content
+INFO:     172.19.0.1:54430 - "GET /stream/Test%20local/Full%20Screen/ball_1767192707.mp4 HTTP/1.1" 206 Partial Content
+INFO:     172.19.0.1:54436 - "GET /stream/Test%20local/Full%20Screen/ball_1767192646.mp4 HTTP/1.1" 206 Partial Content
+INFO:     172.19.0.1:54444 - "GET /stream/Test%20local/Full%20Screen/ball_1767192713.mp4 HTTP/1.1" 206 Partial Content
+INFO:     172.19.0.1:54458 - "GET /stream/Test%20local/Full%20Screen/ball_1767192718.mp4 HTTP/1.1" 206 Partial Content
+INFO:     172.19.0.1:54436 - "GET /download/Test%20local/ball_1767192658.mp4 HTTP/1.1" 206 Partial Content
+INFO:     172.19.0.1:54494 - "GET /download/Test%20local/ball_1767192629.mp4 HTTP/1.1" 206 Partial Content
+INFO:     172.19.0.1:54480 - "GET /download/Test%20local/ball_1767192637.mp4 HTTP/1.1" 206 Partial Content
+INFO:     172.19.0.1:54500 - "GET /stream/Test%20local/Full%20Screen/ball_1767192663.mp4 HTTP/1.1" 206 Partial Content
+INFO:     172.19.0.1:54468 - "GET /stream/Test%20local/Full%20Screen/ball_1767192672.mp4 HTTP/1.1" 206 Partial Content
+INFO:     172.19.0.1:54512 - "GET /stream/Test%20local/Full%20Screen/ball_1767192693.mp4 HTTP/1.1" 206 Partial Content
+INFO:     172.19.0.1:54436 - "GET /stream/Test%20local/Full%20Screen/ball_1767192713.mp4 HTTP/1.1" 206 Partial Content
+INFO:     172.19.0.1:54494 - "GET /stream/Test%20local/Full%20Screen/ball_1767192702.mp4 HTTP/1.1" 206 Partial Content
+INFO:     172.19.0.1:54480 - "GET /stream/Test%20local/Full%20Screen/ball_1767192707.mp4 HTTP/1.1" 206 Partial Content
+INFO:     172.19.0.1:54468 - "GET /stream/Test%20local/Full%20Screen/ball_1767192646.mp4 HTTP/1.1" 206 Partial Content
+INFO:     172.19.0.1:54512 - "GET /stream/Test%20local/Full%20Screen/ball_1767192718.mp4 HTTP/1.1" 206 Partial Content
+INFO:     172.19.0.1:54500 - "GET /stream/Test%20local/Full%20Screen/ball_1767192681.mp4 HTTP/1.1" 206 Partial Content
+INFO:     172.19.0.1:54436 - "GET /download/Test%20local/ball_1767192629.mp4 HTTP/1.1" 206 Partial Content
+INFO:     172.19.0.1:54494 - "GET /download/Test%20local/ball_1767192637.mp4 HTTP/1.1" 206 Partial Content
+INFO:     172.19.0.1:54480 - "GET /stream/Test%20local/Full%20Screen/ball_1767192672.mp4 HTTP/1.1" 206 Partial Content
+INFO:     172.19.0.1:54512 - "GET /stream/Test%20local/Full%20Screen/ball_1767192693.mp4 HTTP/1.1" 206 Partial Content
+INFO:     172.19.0.1:54514 - "GET /download/Test%20local/ball_1767192658.mp4 HTTP/1.1" 206 Partial Content
+INFO:     172.19.0.1:54530 - "GET /stream/Test%20local/Full%20Screen/ball_1767192713.mp4 HTTP/1.1" 206 Partial Content
+INFO:     172.19.0.1:54536 - "GET /stream/Test%20local/Full%20Screen/ball_1767192663.mp4 HTTP/1.1" 206 Partial Content
+INFO:     172.19.0.1:54544 - "GET /stream/Test%20local/Full%20Screen/ball_1767192702.mp4 HTTP/1.1" 206 Partial Content
+INFO:     172.19.0.1:54546 - "GET /stream/Test%20local/Full%20Screen/ball_1767192707.mp4 HTTP/1.1" 206 Partial Content
+INFO:     172.19.0.1:54556 - "GET /stream/Test%20local/Full%20Screen/ball_1767192718.mp4 HTTP/1.1" 206 Partial Content
+INFO:     172.19.0.1:51362 - "GET /api/videos/Test%20local HTTP/1.1" 200 OK
+INFO:     172.19.0.1:51362 - "GET /api/videos/Test%20local HTTP/1.1" 200 OK

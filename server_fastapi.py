@@ -99,49 +99,45 @@ async def stream_manager_page(username: str = Depends(verify_credentials)):
 
 @app.get("/api/stream_status")
 async def stream_status(username: str = Depends(verify_credentials)):
-<<<<<<< HEAD
-    sessions = []
-=======
-    """Returns a list of all active recording sessions."""
     sessions = []
     
->>>>>>> origin/main
     if os.path.exists(SESSIONS_DIR):
         for f in os.listdir(SESSIONS_DIR):
-            if f.endswith(".json"):
-                path = os.path.join(SESSIONS_DIR, f)
+            if not f.endswith(".json"):
+                continue
+                
+            path = os.path.join(SESSIONS_DIR, f)
+            try:
+                with open(path, 'r') as jf:
+                    data = json.load(jf)
+                
+                pid = data.get('pid')
+                start_time = data.get('start_time', 0)
+                
+                # Check if process is still alive
+                is_alive = False
                 try:
-                    with open(path, 'r') as jf:
-                        data = json.load(jf)
-                    
-<<<<<<< HEAD
-                    # Add a 5-second grace period for new processes to stabilize
-                    is_new = (time.time() - data.get('start_time', 0)) < 5
-                    
-                    try:
-                        os.kill(data['pid'], 0) # Check if PID exists
-                        sessions.append(data)
-                    except OSError:
-                        if not is_new:
-                            logger.info(f"Removing dead session: {f}")
-                            os.remove(path)
-                        else:
-                            sessions.append(data) # Still starting up
-                except:
-                    if os.path.exists(path): os.remove(path)
-=======
-                    # Check if process is still alive
-                    try:
-                        os.kill(data['pid'], 0)
-                        sessions.append(data)
-                    except OSError:
-                        # Process dead, clean up file
-                        logger.info(f"Removing dead session file: {f}")
-                        os.remove(path)
-                except:
+                    if pid:
+                        os.kill(pid, 0)
+                        is_alive = True
+                except OSError:
+                    is_alive = False
+
+                # Logic: Keep if alive OR if it's in the 5-second grace period
+                is_new = (time.time() - start_time) < 5
+                
+                if is_alive or is_new:
+                    sessions.append(data)
+                else:
+                    logger.info(f"Removing dead session: {f}")
+                    os.remove(path)
+
+            except (json.JSONDecodeError, IOError, KeyError) as e:
+                # If file is unreadable or corrupted, clean it up
+                logger.error(f"Error processing session file {f}: {e}")
+                if os.path.exists(path):
                     os.remove(path)
                     
->>>>>>> origin/main
     return {"active_sessions": sessions}
 
 @app.post("/api/start_stream")

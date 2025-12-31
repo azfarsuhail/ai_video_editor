@@ -1,41 +1,23 @@
 #!/bin/bash
-<<<<<<< HEAD
-# Restart Branding Worker [cite: 4]
-pkill -f "worker.py"
-# Kill only FFmpeg processes started by the worker [cite: 2]
-pkill -f "ffmpeg.*worker" 
-nohup python3 -u worker.py > worker_log.txt 2>&1 &
-echo "Worker Restarted."
-=======
+echo "🔄 Docker Worker Restart..."
 
-echo "🔄 Restarting FFmpeg Worker..."
+# 1. Force Kill everything (Safe inside a dedicated container)
+# We use -9 to ensure no GPU locks remain
+pkill -9 -f "worker.py"
+pkill -9 -f "ffmpeg" 
 
-# 1. Activate Environment (just in case)
-if [ -d ".venv" ]; then
-    source .venv/bin/activate
-fi
+# 2. Clear old logs so we don't read history
+echo "" > logs_worker.txt
 
-# 2. Kill the running worker
-# Try using the PID file first
-if [ -f worker.pid ]; then
-    PID=$(cat worker.pid)
-    if ps -p $PID > /dev/null; then
-        kill $PID
-        echo "   - Killed PID $PID"
-    fi
-    rm worker.pid
-fi
-
-# Also force kill any ghost processes matching the name
-pkill -f worker.py 2>/dev/null
-
-sleep 1
-
-# 3. Start the worker again (Background mode, logging to file)
+# 3. Start the worker
+# -u is vital for Docker logging (unbuffered)
 nohup python3 -u worker.py > logs_worker.txt 2>&1 &
-NEW_PID=$!
-echo $NEW_PID > worker.pid
+PID=$!
+echo $PID > worker.pid
 
-echo "✅ Worker is active (New PID: $NEW_PID)"
-echo "   - Logs: tail -f logs_worker.txt"
->>>>>>> origin/main
+echo "✅ Worker Started (PID: $PID)"
+echo "👇 STATUS CHECK (First 10 lines of log) 👇"
+echo "------------------------------------------"
+sleep 2
+cat logs_worker.txt
+echo "------------------------------------------"
