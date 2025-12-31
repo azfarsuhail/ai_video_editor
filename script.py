@@ -150,17 +150,22 @@ class AudioMonitor(threading.Thread):
 
 def start_recorder(url: str):
     print(f"[RECORDER] Dumping stream → {record_ts}")
+<<<<<<< HEAD
     # Added -flags +global_header to help with clipping later
     cmd = [
         "ffmpeg", "-y", "-i", url, 
         "-map", "0", "-c", "copy", 
         "-f", "mpegts", "-flags", "+global_header", str(record_ts)
     ]
+=======
+    cmd = ["ffmpeg", "-y", "-i", url, "-map", "0", "-c", "copy", "-f", "mpegts", str(record_ts)]
+>>>>>>> origin/main
     return subprocess.Popen(cmd)
 
 def make_vertical(inp: Path):
     out = final_dir / f"{inp.stem}_V.mp4"
     vf = "scale=-1:1920,crop=1080:1920"
+<<<<<<< HEAD
     # Switch to h264_nvenc for real-time reel generation
     cmd = ["ffmpeg", "-y", "-i", str(inp), "-vf", vf, "-c:v", "h264_nvenc", "-preset", "p1", "-c:a", "copy", str(out)]
     subprocess.run(cmd, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
@@ -189,6 +194,18 @@ def cut_job(t1, t2, out_path):
         make_vertical(out_path)
     else:
         print(f"[ERROR] FFmpeg failed to cut: {result.stderr}")
+=======
+    cmd = ["ffmpeg", "-y", "-i", str(inp), "-vf", vf, "-c:v", "libx264", "-preset", "ultrafast", "-c:a", "copy", str(out)]
+    subprocess.run(cmd, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    print(f"[REEL READY] {out.name}")
+
+def cut_job(t1, t2, out_path):
+    time.sleep(15) # Wait for buffer
+    cmd = ["ffmpeg", "-y", "-ss", f"{t1:.2f}", "-to", f"{t2:.2f}", "-i", str(record_ts), "-map", "0", "-c", "copy", str(out_path)]
+    subprocess.run(cmd, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    print(f"[CLIP SAVED] {out_path.name}")
+    make_vertical(out_path)
+>>>>>>> origin/main
 
 def cut_ball(t1, t2, reason):
     dur = min(max(t2 - t1, BALL_MIN), BALL_MAX)

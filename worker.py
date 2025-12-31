@@ -137,6 +137,7 @@ def append_outro(current_video, outro_path, output_path, is_vertical=False):
         f"[1:a]aresample=48000:async=1,asetpts=PTS-STARTPTS[a1];"
         f"[v0][a0][v1][a1]concat=n=2:v=1:a=1[outv][outa]"
     )
+<<<<<<< HEAD
     # Use the NVIDIA hardware encoder (NVENC)
     cmd = [
         'ffmpeg', '-y',
@@ -146,6 +147,17 @@ def append_outro(current_video, outro_path, output_path, is_vertical=False):
         '-c:v', 'h264_nvenc',             # Use the RTX GPU for encoding
         '-preset', 'p1',                  # 'p1' is fastest for NVENC
         '-c:a', 'aac', '-b:a', '128k',
+=======
+    cmd = [
+        'ffmpeg', '-y',
+        '-i', current_video,
+        '-i', outro_path,
+        '-filter_complex', filter_complex,
+        '-map', '[outv]', '-map', '[outa]',
+        '-c:v', 'libx264', '-preset', 'ultrafast', '-crf', '23',
+        '-c:a', 'aac', '-b:a', '128k',
+        '-max_muxing_queue_size', '4096',
+>>>>>>> origin/main
         output_path
     ]
     run_ffmpeg(cmd)

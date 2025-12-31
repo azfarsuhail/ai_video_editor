@@ -2,5 +2,9 @@ fastapi
 uvicorn
 numpy
 opencv-python-headless
+<<<<<<< HEAD
 easyocr
 # We will handle torch separately in the Dockerfile for better stability
+=======
+easyocr
+>>>>>>> origin/main
